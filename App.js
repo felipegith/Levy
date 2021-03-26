@@ -1,21 +1,38 @@
-import { StatusBar } from 'expo-status-bar';
+import 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message'
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+
+import { StatusBar } from 'expo-status-bar';
+import { useFonts } from 'expo-font'
+import {  
+    Raleway_300Light,
+    Raleway_500Medium,
+    Raleway_700Bold,
+    Raleway_400Regular
+} from '@expo-google-fonts/raleway'
+
+import Routes from './src/Routes/Routes'
+import { UserContextProvider } from './src/Context/UserContext'
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+      Raleway_300Light,
+      Raleway_500Medium,
+      Raleway_700Bold,
+      Raleway_400Regular
+  })
+  if (!fontsLoaded) {
+    return null;
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <UserContextProvider>
+      <>
+      <Routes/>
+      <StatusBar style="auto" backgroundColor="#fff" />
+      <Toast ref={(ref) => Toast.setRef(ref)}/>
+      </>
+    </UserContextProvider> 
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
